@@ -11,7 +11,8 @@ class App extends Component {
     super(); //this method allows us to get information from parent component by using "this" keyword
     this.state = {
       myName: "Chase Parker",
-      myAppointments: []
+      myAppointments: [],
+      lastIndex: 0
     };
   }
 
@@ -20,6 +21,8 @@ class App extends Component {
     .then(response => response.json())
     .then(result => {
       const appts = result.map(item => {
+        item.aptId = this.state.lastIndex;
+        this.setState({lastIndex: this.state.lastIndex + 1})
         return item;
       })
       this.setState({
@@ -30,8 +33,6 @@ class App extends Component {
   }
 
   render() {
-
-
 
     return (
       <main className="page bg-white" id="petratings">
