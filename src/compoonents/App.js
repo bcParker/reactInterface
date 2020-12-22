@@ -5,6 +5,8 @@ import AddAppointments from './AddAppointments';
 import SearchAppointments from './SearchAppointments';
 import ListAppointments from './ListAppointments';
 
+import {without} from 'lodash';
+
 class App extends Component {
 
   constructor() {
@@ -14,6 +16,16 @@ class App extends Component {
       myAppointments: [],
       lastIndex: 0
     };
+    this.deleteAppointment = this.deleteAppointment.bind(this);
+  }
+
+  deleteAppointment(apt) {
+    let tempAppts = this.state.myAppointments;
+    tempAppts = without(tempAppts, apt);
+    
+    this.setState({
+      myAppointments: tempAppts
+    });
   }
 
   componentDidMount() {
@@ -42,7 +54,7 @@ class App extends Component {
               <div className="container">
                 <AddAppointments/>
                 <SearchAppointments/>
-                <ListAppointments appointments={this.state.myAppointments}/>
+                <ListAppointments appointments={this.state.myAppointments} deleteAppointment={this.deleteAppointment}/>
               </div>
             </div>
           </div>
